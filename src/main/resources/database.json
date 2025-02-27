@@ -8,6 +8,6 @@
     { "bookId": 2, "title": "El Principito", "author": "Antoine de Saint-Exupéry", "availableCopies": 0, "totalCopies": 1 }
   ],
   "loansList": [
-    { "loanID": 1, "type": "out","userId": 2, "bookId": 2, "dateLoan": "15-02-2025" }
+    { "loanId": 1, "type": "out","userId": 2, "bookId": 2, "dateLoan": "15-02-2025" }
   ]
 }
