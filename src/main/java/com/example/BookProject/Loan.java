@@ -1,4 +1,4 @@
 package com.example.BookProject;
 
-public record Loan(int loanId, String type, int userId, int bookId, String dateLoan) {}
+public record Loan(String loanId, boolean active, int userId, int bookId, String dateLoan) {}
 

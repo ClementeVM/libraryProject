@@ -1,13 +1,27 @@
 {
   "usersList": [
     { "userId": 1, "userRole": "admin", "userName": "Clemente", "password": "123456", "email": "clemente@bookproject.com" },
-    { "userId": 2, "userRole": "user", "userName": "Luis","password": "abcdef", "email": "luis@mail.com " }
+    { "userId": 2, "userRole": "user", "userName": "Luis","password": "asdfghjkl", "email": "luis@mail.com " },
+    { "userId": 3, "userRole": "user", "userName": "Mark","password": "0192837465", "email": "Mark@mail.com " },
+    { "userId": 4, "userRole": "user", "userName": "John","password": "MmNnBbVv", "email": "John@mail.com " },
+    { "userId": 5, "userRole": "user", "userName": "Guillermo","password": "qwerty", "email": "Guillermo@mail.com " },
+    { "userId": 6, "userRole": "user", "userName": "Carlos","password": "987654321", "email": "Carlos@mail.com " }
   ],
   "booksList": [
     { "bookId": 1, "title": "1984", "author": "George Orwell", "aviableCopies": 1, "totalCopies": 2 },
-    { "bookId": 2, "title": "El Principito", "author": "Antoine de Saint-Exupéry", "availableCopies": 0, "totalCopies": 1 }
+    { "bookId": 2, "title": "El Principito", "author": "Antoine de Saint-Exupéry", "availableCopies": 0, "totalCopies": 1 },
+    { "bookId": 3, "title": "To Kill a Mockingbird", "author": "Harper Lee", "availableCopies": 0, "totalCopies": 1 },
+    { "bookId": 4, "title": "Pride and Prejudice", "author": "Jane austen", "availableCopies": 0, "totalCopies": 1 },
+    { "bookId": 5, "title": "The great Gatsby", "author": "F. Scott Fitzgerald", "availableCopies": 0, "totalCopies": 1 },
+    { "bookId": 6, "title": "Moby-Dick", "author": "Herman Melville", "availableCopies": 0, "totalCopies": 1 }
   ],
   "loansList": [
-    { "loanId": 1, "type": "out","userId": 2, "bookId": 2, "dateLoan": "15-02-2025" }
+    { "loanId": 1, "active": true,"userId": 2, "bookId": 2, "dateLoan": "15-02-2025" },
+    { "loanId": 2, "active": true,"userId": 2, "bookId": 2, "dateLoan": "15-02-2025" },
+    { "loanId": 3, "active": true,"userId": 2, "bookId": 2, "dateLoan": "15-02-2025" },
+    { "loanId": 4, "active": true,"userId": 2, "bookId": 2, "dateLoan": "15-02-2025" },
+    { "loanId": 5, "active": true,"userId": 2, "bookId": 2, "dateLoan": "15-02-2025" },
+    { "loanId": 6, "active": true,"userId": 2, "bookId": 2, "dateLoan": "15-02-2025" }
+
   ]
 }

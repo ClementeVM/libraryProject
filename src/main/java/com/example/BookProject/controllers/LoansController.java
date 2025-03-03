@@ -26,20 +26,15 @@ public class LoansController {
 
         return ResponseEntity.ok(libraryData.loansList());
     }
-
     @GetMapping("/{loanId}")
     public ResponseEntity<Loan> getLoanById(@PathVariable String loanId) throws IOException {
         LibraryData libraryData = libraryDataRepository.loadData();
         List<Loan> loans = libraryData.loansList();
-        //loans.stream().filter();
-        Loan loanToReturn = null;
-        for (Loan currentLoan : loans) {
-            if (Objects.equals(loanId, currentLoan.loanId())) {
-                loanToReturn = currentLoan;
-                break;
-            }
-        }
-        assert loanToReturn != null;
-        return ResponseEntity.ok(loanToReturn);
+
+        return loans.stream()
+                .filter(loan -> Objects.equals(loanId, loan.loanId()))
+                .findFirst()
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 }

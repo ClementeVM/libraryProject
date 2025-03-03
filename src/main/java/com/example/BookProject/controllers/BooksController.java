@@ -2,6 +2,7 @@ package com.example.BookProject.controllers;
 
 import com.example.BookProject.Book;
 import com.example.BookProject.LibraryData;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.BookProject.repository.LibraryDataRepository;
@@ -31,15 +32,29 @@ public class BooksController {
     public ResponseEntity<Book> getBookById(@PathVariable String bookId) throws IOException {
         LibraryData libraryData = libraryDataRepository.loadData();
         List<Book> books = libraryData.booksList();
-        //books.stream().filter();
-        Book bookToReturn = null;
-        for (Book currentBook : books) {
-            if (Objects.equals(bookId, currentBook.bookId())) {
-                bookToReturn = currentBook;
-                break;
+
+        return books.stream()
+                .filter(user -> Objects.equals(bookId, user.bookId()))
+                .findFirst()
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping("/addBook")
+    public ResponseEntity<String> addBook(@RequestBody Book book) {
+        try {
+            if (book.title() == null || book.title().isEmpty() ||
+                    book.author() == null || book.author().isEmpty() ||
+                    book.bookId() == null || book.bookId().isEmpty()) {
+                return ResponseEntity.badRequest().body("book data not valid");
             }
+
+            libraryDataRepository.addBook(book);
+            return ResponseEntity.ok("Book added successfully");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error saving the book");
         }
-        assert bookToReturn != null;
-        return ResponseEntity.ok(bookToReturn);
     }
 }

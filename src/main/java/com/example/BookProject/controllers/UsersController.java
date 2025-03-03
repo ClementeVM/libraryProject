@@ -2,6 +2,7 @@ package com.example.BookProject.controllers;
 
 import com.example.BookProject.User;
 import com.example.BookProject.LibraryData;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.BookProject.repository.LibraryDataRepository;
@@ -26,20 +27,35 @@ public class UsersController {
 
         return ResponseEntity.ok(libraryData.usersList());
     }
-
     @GetMapping("/{userId}")
     public ResponseEntity<User> getUserById(@PathVariable String userId) throws IOException {
         LibraryData libraryData = libraryDataRepository.loadData();
         List<User> users = libraryData.usersList();
-        //users.stream().filter();
-        User userToReturn = null;
-        for (User currentUser : users) {
-            if (Objects.equals(userId, currentUser.userId())) {
-                userToReturn = currentUser;
-                break;
+
+        return users.stream()
+                .filter(user -> Objects.equals(userId, user.userId()))
+                .findFirst()
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping("/addUser")
+    public ResponseEntity<String> addUser(@RequestBody User user) {
+        try {
+            if (user.userId() == null || user.userId().isEmpty() ||
+                    user.userRole() == null || user.userRole().isEmpty() ||
+                    user.userName() == null || user.userName().isEmpty() ||
+                    user.password() == null || user.password().isEmpty() ||
+                    user.email() == null || user.email().isEmpty()) {
+                return ResponseEntity.badRequest().body("All these information is required");
             }
+
+            libraryDataRepository.addUser(user);
+            return ResponseEntity.ok("User added successfully");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error saving the user");
         }
-        assert userToReturn != null;
-        return ResponseEntity.ok(userToReturn);
     }
 }
